@@ -25,6 +25,7 @@ public class Room {
     public String toString() {
         return this.name + ": device "
              + this.device.getId() + " and "
-             + this.surface + " sq.\n";
+             + this.surface + " sqm."
+             + "\n";
     }
 }

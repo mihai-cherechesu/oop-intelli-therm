@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Set;
 
 /**
  * Class that reads the input, loads the objects and
@@ -15,6 +14,7 @@ public class DataLoader {
     private static File inputFile;
     private static File outputFile;
     private static String currentLine;
+    private static String []tokens;
     private static BufferedReader bufferedReader;
     private static BufferedWriter bufferedWriter;
     private static boolean firstLineIO;
@@ -45,6 +45,7 @@ public class DataLoader {
      */
     public static void setFirstLineIO() { firstLineIO = false; }
     public static boolean isFirstLineIO() { return firstLineIO; }
+    public static String[] getTokens() { return tokens; }
 
     /***
      * Data loader method.
@@ -71,21 +72,24 @@ public class DataLoader {
      */
 
 
-    private boolean runner(String[] tokens) throws IOException {
-
+    private boolean runner(String[] tokens, HeatSystem system) throws IOException {
 
         String function = tokens[StandardTokenIO.getFunction()];
 
         if (function.equals(StandardFunctions.getObserve())) {
-            return true;
+            system.observe(tokens);
+
         } else if (function.equals(StandardFunctions.getHumidity())) {
-            return true;
+            system.observeHumidity(tokens);
+
         } else if (function.equals(StandardFunctions.getList())) {
-            return true;
+            system.list(tokens);
+
         } else if (function.equals(StandardFunctions.getTemperature())) {
-            return true;
+            system.temperature(tokens);
+
         } else if (function.equals(StandardFunctions.getTrigger())) {
-            return true;
+            system.trigger(tokens);
         }
 
         return true;
@@ -98,10 +102,9 @@ public class DataLoader {
      */
     public static void main(String[] args) throws IOException {
 
-
+        HeatSystem system = new HeatSystem();
         DataLoader loader = new DataLoader();
-        String []tokens; // String for line parsing.
-        boolean bool;    // Auxiliary boolean for ternary operator
+        boolean bool; // Auxiliary boolean for ternary operator
 
         try {
             currentLine = bufferedReader.readLine();                      // Read line
@@ -127,13 +130,14 @@ public class DataLoader {
 
                 bool = (HeatSystem.getRoomCount() != 0) ?
                        (loader.loader(tokens)) :        // Load objects
-                       (loader.runner(tokens));         // Run function upon objects
+                       (loader.runner(tokens, system)); // Run function upon objects
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        System.out.println(HeatSystem.getRooms().get("ROOM1").getDevice().getSeries());
 
         DataLoader.bufferedReader.close();
         DataLoader.bufferedWriter.close();

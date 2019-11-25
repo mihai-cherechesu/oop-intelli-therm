@@ -10,6 +10,8 @@ public class StandardTokenIO {
     private final static int monitoring;
     private final static int start;
     private final static int end;
+    private final static int intervals;
+    private final static int hour;
 
     static {
         tokens = 4;
@@ -23,7 +25,16 @@ public class StandardTokenIO {
         temperature = 3;
         start = 2;
         end = 3;
+        intervals = 24;
+        hour = 3600;
+    }
 
+    public static int getHour() {
+        return hour;
+    }
+
+    public static int getIntervals() {
+        return intervals;
     }
 
     public static int getTokens() {

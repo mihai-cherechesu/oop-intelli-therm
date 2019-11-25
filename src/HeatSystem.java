@@ -1,29 +1,63 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HeatSystem {
     private static int roomCount;
     private static double global;
     private static long timestamp;
-    private static Set<Room> rooms;
+    private static Map<String, Room> rooms;
+
+    public HeatSystem() {}
 
     static {
         roomCount = 0;
         global = 0;
         timestamp = 0;
-        rooms = new HashSet<>();
+        rooms = new HashMap<>();
     }
-    
 
+    public void observe(String[] tokens) {
+        String id = tokens[StandardTokenIO.getDevice()];
 
+        long hours = StandardTokenIO.getIntervals() * StandardTokenIO.getHour();
+        long lowerBound = HeatSystem.getTimestamp() - hours;
 
+        long timestamp = Long.parseLong
+                   (tokens[StandardTokenIO.getTimestamp()]);
+        double temperature = Double.parseDouble
+                   (tokens[StandardTokenIO.getTemperature()]);
 
+        if (timestamp > HeatSystem.getTimestamp()) return;
+        if (timestamp < lowerBound) return;
+
+        Room room = rooms.get(id);
+        Device device = room.getDevice();
+
+        device.getRecords().put(timestamp, temperature);
+        device.frame(timestamp);
+    }
+
+    public void trigger(String[] tokens) {
+
+    }
+
+    public void temperature(String[] tokens) {
+
+    }
+
+    public void list(String[] tokens) {
+
+    }
+
+    public void observeHumidity(String[] tokens) {
+
+    }
 
     public static void configureRoom(String name, String id, int surface) {
-        rooms.add(new Room(name, id, surface));
+        rooms.put(name, new Room(name, id, surface));
     }
 
-    public static Set<Room> getRooms() {
+    public static Map<String, Room> getRooms() {
         return rooms;
     }
 
