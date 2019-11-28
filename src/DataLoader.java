@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.Map;
+import java.util.SortedMap;
 
 /**
  * Class that reads the input, loads the objects and
@@ -55,7 +57,7 @@ public class DataLoader {
     private boolean loader(String []tokens) {
 
         String name = tokens[StandardTokenIO.getRoom()];
-        String id = tokens[StandardTokenIO.getDevice()];
+        String id   = tokens[StandardTokenIO.getDevice()];
         int surface = Integer.parseInt(tokens[StandardTokenIO.getSurface()]);
 
         HeatSystem.configureRoom(name, id, surface);
@@ -137,7 +139,21 @@ public class DataLoader {
             e.printStackTrace();
         }
 
-        System.out.println(HeatSystem.getRooms().get("ROOM1").getDevice().getSeries());
+
+
+
+        int x = 0;
+        for (long ts : HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().keySet()) {
+            if (HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts) != null) {
+                Map<Long, SortedMap<Long, Double>> sr = HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries();
+
+                for (long rts : sr.get(ts).keySet()) {
+                    System.out.println(HeatSystem.convert(rts) + " : " + sr.get(ts).get(rts));
+                }
+//                x += HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts).values().size();
+            }
+        }
+        System.out.println(x);
 
         DataLoader.bufferedReader.close();
         DataLoader.bufferedWriter.close();

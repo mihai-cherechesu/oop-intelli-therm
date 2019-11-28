@@ -14,7 +14,8 @@ public class Device {
         this.records = new TreeMap<>();
         this.series = new HashMap<>();
 
-        for (int interval = 1; interval <= StandardTokenIO.getIntervals(); interval++) {
+        for (int interval = 1; interval <= StandardTokenIO.getIntervals();
+                               interval++) {
 
             this.series.put(HeatSystem.getTimestamp() -
                             interval * StandardTokenIO.getHour(), null);
@@ -22,7 +23,8 @@ public class Device {
     }
 
     public void frame(long timestamp) {
-        long minimum = 0, closest = 0;
+        long minimum = timestamp;
+        long closest = 0;
         long lowerBound = 0, upperBound = 0;
         SortedMap<Long, Double> subMap = null;
 

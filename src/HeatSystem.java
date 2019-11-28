@@ -16,19 +16,22 @@ public class HeatSystem {
         rooms = new HashMap<>();
     }
 
+    public static long convert(long timestamp) {
+        long lowerBound = HeatSystem.timestamp - 3600 * 24;
+        return ((timestamp - lowerBound) / 3600);
+    }
+
     public void observe(String[] tokens) {
         String id = tokens[StandardTokenIO.getDevice()];
 
         long hours = StandardTokenIO.getIntervals() * StandardTokenIO.getHour();
-        long lowerBound = HeatSystem.getTimestamp() - hours;
-
         long timestamp = Long.parseLong
                    (tokens[StandardTokenIO.getTimestamp()]);
         double temperature = Double.parseDouble
                    (tokens[StandardTokenIO.getTemperature()]);
 
         if (timestamp > HeatSystem.getTimestamp()) return;
-        if (timestamp < lowerBound) return;
+        if (timestamp < HeatSystem.getTimestamp() - hours) return;
 
         Room room = rooms.get(id);
         Device device = room.getDevice();
@@ -54,7 +57,7 @@ public class HeatSystem {
     }
 
     public static void configureRoom(String name, String id, int surface) {
-        rooms.put(name, new Room(name, id, surface));
+        rooms.put(id, new Room(name, id, surface));
     }
 
     public static Map<String, Room> getRooms() {
