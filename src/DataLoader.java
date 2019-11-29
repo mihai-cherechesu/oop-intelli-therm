@@ -140,20 +140,25 @@ public class DataLoader {
         }
 
 
-
-
-        int x = 0;
-        for (long ts : HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().keySet()) {
-            if (HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts) != null) {
-                Map<Long, SortedMap<Long, Double>> sr = HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries();
-
-                for (long rts : sr.get(ts).keySet()) {
-                    System.out.println(HeatSystem.convert(rts) + " : " + sr.get(ts).get(rts));
-                }
-//                x += HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts).values().size();
-            }
+        SortedMap<Long, Double> subMap = HeatSystem.getRooms().get("XUID5NZ").getDevice().getRecords().subMap((long)1574542006, (long)1574552806);
+//        System.out.println(subMap);
+        for (long ts : subMap.keySet()) {
+            bufferedWriter.write(String.valueOf(subMap.get(ts)) + " ");
         }
-        System.out.println(x);
+
+//        for (long ts : HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().keySet()) {
+//            if (HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts) != null) {
+//                Map<Long, SortedMap<Long, Double>> sr = HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries();
+//
+//                for (long rts : sr.get(ts).keySet()) {
+//                    System.out.println("Raw key:" + rts + " " + HeatSystem.convert(rts) + " : " + sr.get(ts).get(rts));
+//                    bufferedWriter.write(String.valueOf(sr.get(ts).get(rts)));
+//                }
+////                x += HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts).values().size();
+//            }
+//        }
+//        System.out.println(HeatSystem.convert(1574542006));
+//        System.out.println(HeatSystem.convert(1574552806));
 
         DataLoader.bufferedReader.close();
         DataLoader.bufferedWriter.close();
