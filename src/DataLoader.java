@@ -1,7 +1,4 @@
 import java.io.*;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * Class that reads the input, loads the objects and
@@ -86,7 +83,7 @@ public class DataLoader {
             system.observe(tokens);
 
         } else if (function.equals(StandardFunctions.getHumidity())) {
-            system.observeHumidity(tokens);
+            system.observe(tokens);
 
         } else if (function.equals(StandardFunctions.getList())) {
             system.list(tokens);
@@ -117,12 +114,22 @@ public class DataLoader {
             tokens = currentLine.split(" ", StandardTokenIO.getTokens()); // Split line
 
             int roomCount = Integer.parseInt(tokens[StandardTokenIO.getRoom()]);
-            double global = Double.parseDouble(tokens[StandardTokenIO.getGlobal()]);
-            long timestamp = Long.parseLong(tokens[StandardTokenIO.getTimestamp()]);
+            double globalTemperature = Double.parseDouble
+                                            (tokens[StandardTokenIO.getGlobalTemperature()]);
+            long timestamp = 0;
+            double globalHumidity = 0;
+
+            if (tokens.length == 3) {
+                timestamp = Long.parseLong(tokens[StandardTokenIO.getTimestamp()]);
+            } else if (tokens.length == 4) {
+                timestamp = Long.parseLong(tokens[StandardTokenIO.getTimestamp() + 1]);
+                globalHumidity = Double.parseDouble(tokens[StandardTokenIO.getHumidity()]);
+            }
 
             HeatSystem.setRoomCount(roomCount);
-            HeatSystem.setGlobal(global);
+            HeatSystem.setGlobalTemperature(globalTemperature);
             HeatSystem.setTimestamp(timestamp);
+            HeatSystem.setGlobalHumidity(globalHumidity);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,17 +149,6 @@ public class DataLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-//        SortedMap<Long, Double> subMap = HeatSystem.getRooms().get("XUID5NZ").getDevice().getRecords().subMap((long)1574542006, (long)1574552806);
-//        Map<Long, Double> sortedMap = new TreeMap<>(new ValueComparator(subMap));
-//        sortedMap.putAll(subMap);
-//
-//        for (long ts : sortedMap.keySet()) {
-//            bufferedWriter.write(String.valueOf(sortedMap.get(ts)) + " ");
-//        }
-//        System.out.println("The series for device XUID5NZ: ");
-//        System.out.println(HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries());
 
         DataLoader.bufferedReader.close();
         DataLoader.bufferedWriter.close();

@@ -12,6 +12,7 @@ public class StandardTokenIO {
     private final static int end;
     private final static int intervals;
     private final static int hour;
+    private final static int humidity;
 
     static {
         tokens = 4;
@@ -27,11 +28,12 @@ public class StandardTokenIO {
         end = 3;
         intervals = 24;
         hour = 3600;
+        humidity = 2;
     }
 
-    public static int getHour() {
-        return hour;
-    }
+    public static int getHumidity() { return humidity; }
+
+    public static int getHour() { return hour; }
 
     public static int getIntervals() {
         return intervals;
@@ -45,7 +47,7 @@ public class StandardTokenIO {
         return room;
     }
 
-    public static int getGlobal() {
+    public static int getGlobalTemperature() {
         return global;
     }
 

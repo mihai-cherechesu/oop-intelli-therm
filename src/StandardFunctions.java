@@ -10,7 +10,7 @@ public class StandardFunctions {
         trigger = "TRIGGER";
         temperature = "TEMPERATURE";
         list = "LIST";
-        humidity = "HUMIDITY";
+        humidity = "OBSERVEH";
     }
 
     public static String getObserve() {

@@ -20,12 +20,4 @@ public class Room {
     public int getSurface() {
         return surface;
     }
-
-    @Override
-    public String toString() {
-        return this.name + ": device "
-             + this.device.getId() + " and "
-             + this.surface + " sqm."
-             + "\n";
-    }
 }
