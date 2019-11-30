@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Class that reads the input, loads the objects and
@@ -45,9 +46,12 @@ public class DataLoader {
     /***
      * Getters and setters for non-static fields.
      */
+
     public static void setFirstLineIO() { firstLineIO = false; }
     public static boolean isFirstLineIO() { return firstLineIO; }
     public static String[] getTokens() { return tokens; }
+    public static BufferedReader getBufferedReader() { return bufferedReader; }
+    public static BufferedWriter getBufferedWriter() { return bufferedWriter; }
 
     /***
      * Data loader method.
@@ -140,25 +144,15 @@ public class DataLoader {
         }
 
 
-        SortedMap<Long, Double> subMap = HeatSystem.getRooms().get("XUID5NZ").getDevice().getRecords().subMap((long)1574542006, (long)1574552806);
-//        System.out.println(subMap);
-        for (long ts : subMap.keySet()) {
-            bufferedWriter.write(String.valueOf(subMap.get(ts)) + " ");
-        }
-
-//        for (long ts : HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().keySet()) {
-//            if (HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts) != null) {
-//                Map<Long, SortedMap<Long, Double>> sr = HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries();
+//        SortedMap<Long, Double> subMap = HeatSystem.getRooms().get("XUID5NZ").getDevice().getRecords().subMap((long)1574542006, (long)1574552806);
+//        Map<Long, Double> sortedMap = new TreeMap<>(new ValueComparator(subMap));
+//        sortedMap.putAll(subMap);
 //
-//                for (long rts : sr.get(ts).keySet()) {
-//                    System.out.println("Raw key:" + rts + " " + HeatSystem.convert(rts) + " : " + sr.get(ts).get(rts));
-//                    bufferedWriter.write(String.valueOf(sr.get(ts).get(rts)));
-//                }
-////                x += HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries().get(ts).values().size();
-//            }
+//        for (long ts : sortedMap.keySet()) {
+//            bufferedWriter.write(String.valueOf(sortedMap.get(ts)) + " ");
 //        }
-//        System.out.println(HeatSystem.convert(1574542006));
-//        System.out.println(HeatSystem.convert(1574552806));
+//        System.out.println("The series for device XUID5NZ: ");
+//        System.out.println(HeatSystem.getRooms().get("XUID5NZ").getDevice().getSeries());
 
         DataLoader.bufferedReader.close();
         DataLoader.bufferedWriter.close();

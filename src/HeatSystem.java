@@ -1,5 +1,6 @@
-import java.util.HashMap;
-import java.util.Map;
+import javax.xml.crypto.Data;
+import java.io.IOException;
+import java.util.*;
 
 public class HeatSystem {
     private static int roomCount;
@@ -48,8 +49,38 @@ public class HeatSystem {
 
     }
 
-    public void list(String[] tokens) {
+    public void list(String[] tokens) throws IOException {
 
+        long lower = Long.parseLong(tokens[StandardTokenIO.getStart()]);
+        long upper = Long.parseLong(tokens[StandardTokenIO.getEnd()]);
+
+        String name = tokens[StandardTokenIO.getMonitoring()];
+        Map<String, Room> rooms = HeatSystem.getRooms();                // Shadowing the static.
+        SortedMap<Long, SortedMap<Long, Double>> reversed = new TreeMap<>(Comparator.reverseOrder());
+        String output = "";
+
+        for (String key : rooms.keySet()) {
+            if (rooms.get(key).getName().equals(name)) {                // Found the room name.
+
+                // Fetches the time series buckets in reversed order and the
+                // entries within the buckets in ascending order.
+                reversed.putAll(rooms.get(key).getDevice().getSeries().subMap(lower, upper));
+
+                for (Long bucket : reversed.keySet()) {
+                    for (Long entry : reversed.get(bucket).keySet()) {
+
+                        Double temperature = reversed.get(bucket).get(entry);
+                        output +=  String.format("%.2f", temperature) + " ";
+
+                    }
+                }
+
+                // Write the room name into the output file.
+                DataLoader.getBufferedWriter().write(rooms.get(key).getName() + " ");
+                DataLoader.getBufferedWriter().write(output.trim() + "\n");
+                break;
+            }
+        }
     }
 
     public void observeHumidity(String[] tokens) {

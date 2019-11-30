@@ -1,18 +1,15 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Device {
 
     private final String id;
     private SortedMap<Long, Double> records;
-    private Map<Long, SortedMap<Long, Double>> series;
+    private SortedMap<Long, SortedMap<Long, Double>> series;
 
     public Device(String id) {
         this.id = id;
         this.records = new TreeMap<>();
-        this.series = new HashMap<>();
+        this.series = new TreeMap<>();
 
         for (int interval = 1; interval <= StandardTokenIO.getIntervals();
                                interval++) {
@@ -37,12 +34,15 @@ public class Device {
             }
         }
         upperBound = lowerBound + StandardTokenIO.getHour();
-        subMap = this.records.subMap(lowerBound, upperBound);
 
-        this.series.put(lowerBound, subMap);
+        subMap = this.records.subMap(lowerBound, upperBound);
+        SortedMap<Long, Double> sortedMap = new TreeMap<>(new ValueComparator(subMap));
+        sortedMap.putAll(subMap);
+
+        this.series.put(lowerBound, sortedMap);
     }
 
-    public Map<Long, SortedMap<Long, Double>> getSeries() {
+    public SortedMap<Long, SortedMap<Long, Double>> getSeries() {
         return series;
     }
 
