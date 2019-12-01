@@ -2,7 +2,7 @@ import java.io.*;
 
 /**
  * Class that reads the input, loads the objects and
- * runs the functions for the heap.
+ * runs the heat system functions.
  */
 public class DataLoader {
 
@@ -41,7 +41,7 @@ public class DataLoader {
     }
 
     /***
-     * Getters and setters for non-static fields.
+     * Getters and setters for fields.
      */
 
     public static void setFirstLineIO() { firstLineIO = false; }
@@ -73,8 +73,6 @@ public class DataLoader {
      * @return true or false
      * @throws IOException
      */
-
-
     private boolean runner(String[] tokens, HeatSystem system) throws IOException {
 
         String function = tokens[StandardTokenIO.getFunction()];
@@ -119,17 +117,17 @@ public class DataLoader {
             long timestamp = 0;
             double globalHumidity = 0;
 
-            if (tokens.length == 3) {
+            if (tokens.length == 3) {            // When the heat system does not act in accordance with humidity.
                 timestamp = Long.parseLong(tokens[StandardTokenIO.getTimestamp()]);
-            } else if (tokens.length == 4) {
+            } else if (tokens.length == 4) {     // When the heat system does act in accordance with humidity.
                 timestamp = Long.parseLong(tokens[StandardTokenIO.getTimestamp() + 1]);
                 globalHumidity = Double.parseDouble(tokens[StandardTokenIO.getHumidity()]);
             }
 
-            HeatSystem.setRoomCount(roomCount);
-            HeatSystem.setGlobalTemperature(globalTemperature);
-            HeatSystem.setTimestamp(timestamp);
-            HeatSystem.setGlobalHumidity(globalHumidity);
+            HeatSystem.setRoomCount(roomCount);                 // Loads the roomCount static variable.
+            HeatSystem.setGlobalTemperature(globalTemperature); // Loads the global temperature.
+            HeatSystem.setTimestamp(timestamp);                 // Loads the reference timestamp.
+            HeatSystem.setGlobalHumidity(globalHumidity);       // Loads the global humidity (0 if none).
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,8 +140,8 @@ public class DataLoader {
                 tokens = currentLine.split(" ", StandardTokenIO.getTokens());
 
                 bool = (HeatSystem.getRoomCount() != 0) ?
-                       (loader.loader(tokens)) :        // Load objects
-                       (loader.runner(tokens, system)); // Run function upon objects
+                       (loader.loader(tokens)) :        // Load the rooms.
+                       (loader.runner(tokens, system)); // Register the parameters with devices.
             }
 
         } catch (IOException e) {

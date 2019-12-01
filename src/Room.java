@@ -1,3 +1,7 @@
+/**
+ * Room class: stores the surface, name
+ * and the a reference address to the proprietary device.
+ */
 public class Room {
     private final String name;
     private final Device device;

@@ -1,3 +1,6 @@
+/**
+ * General used, pre-defined functions.
+ */
 public class StandardFunctions {
     private final static String observe;
     private final static String trigger;

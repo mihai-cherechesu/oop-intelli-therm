@@ -1,3 +1,6 @@
+/**
+ * General used, pre-defined tokens.
+ */
 public class StandardTokenIO {
     private final static int tokens;
     private final static int room;
@@ -31,9 +34,13 @@ public class StandardTokenIO {
         humidity = 2;
     }
 
-    public static int getHumidity() { return humidity; }
+    public static int getHumidity() {
+        return humidity;
+    }
 
-    public static int getHour() { return hour; }
+    public static int getHour() {
+        return hour;
+    }
 
     public static int getIntervals() {
         return intervals;
