@@ -1,9 +1,7 @@
-Nume: Cherechesu
-Prenume: Mihai-Cristian
-Grupa: 323 CB
+Copyright: Mihai Cherechesu
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-IntelliTherm - Tema 2, POO ####################################################
+IntelliTherm ##################################################################
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Table of contents:
@@ -15,10 +13,10 @@ Table of contents:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1) Idee generala
-	Nucleul temei a constat in colectarea unor date intr-o maniera 
+	Nucleul a constat in colectarea unor date intr-o maniera 
 organizata si structurarea lor cu ajutorul conceptului de statistica Time Series pentru a facilita accesul si interpretarea.	
 
-	Pipeline-ul temei:
+	Pipeline:
 	a) Citirea inputului din therm.in
 	b) Configurarea camerelor cu device-uri si setarea parametrilor globali
 	c) Inregistrarea temperaturii / umiditatii prin device-urile instalate
@@ -43,10 +41,10 @@ organizata si structurarea lor cu ajutorul conceptului de statistica Time Series
 
 
 a) DataLoader.main ~~~~~~~~~~~~~~~~~~~~~~~~~
-	- main(): Citeste fisierul de intrare
+	- main(): In file reading.
 	- loader(): Incarca parametrii globali si numarul de camere ce vor avea 
  device-uri pentru inregistrare.
-	- runner(): Ruleaza functiile sistemului de incalzire conform enuntului.
+	- runner(): Ruleaza functiile sistemului de incalzire.
 
 
 b) Room ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
